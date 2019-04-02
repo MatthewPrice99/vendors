@@ -30,7 +30,7 @@ class Header extends Component {
                  <li className ="last">
                     <NavLink to='/update' exact activeStyle={
                         {color : 'red'}
-                    }>Update items</NavLink>
+                    }>Update Items</NavLink>
                  </li>
              </ul>
          </nav>

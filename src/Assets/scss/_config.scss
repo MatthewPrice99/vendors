@@ -4,6 +4,7 @@ $white: #ffffff;
 $lightGrey: #e6e6e6;
 $darkGrey: #333;
 $red: #a70000;
+$vanillaCust: #F3E0BE;
 
 //mixins
 
@@ -25,6 +26,7 @@ $red: #a70000;
 
 body{
     font-family: 'Open Sans',sans-serif;
+    background: $lightGrey;
     font-size: 18px;
     color: $black;
     font-weight: 400;
