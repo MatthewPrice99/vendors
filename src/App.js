@@ -10,6 +10,7 @@ import Register from './components/pages/register';
 import About from './components/pages/about';
 import Update from './components/pages/update';
 import Header2 from './components/headerComponent/header2';
+import Admin from './components/pages/admin';
 
 
 //includes
@@ -57,6 +58,11 @@ class App extends Component {
           <Route path ="/about" exact strict render={
             ()=>{
               return <About/>
+            }
+          }/> 
+          <Route path ="/admin" exact strict render={
+            ()=>{
+              return <Admin/>
             }
           }/> 
           <Route path ="/update" exact strict render={
