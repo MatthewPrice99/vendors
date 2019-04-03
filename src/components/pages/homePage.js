@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
-import { BrowserRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import App from '../../App';
 
 
@@ -10,8 +10,8 @@ import App from '../../App';
 
 
 console.log(sessionStorage.getItem("loggedIn"));
-var message = '';
-if(sessionStorage.getItem("loggedIn")!=true){
+let message;
+if(sessionStorage.getItem("loggedIn")!==true){
   console.log(sessionStorage.getItem("loggedIn"))
   message = "Please Enter Correct User/Password"
 }
@@ -25,57 +25,19 @@ class Homepage extends Component {
       loggedIn:false,
       name : "",
       email: '',
-      password: ''
+      password: '',
+      redirect: false
     };
 
-    // async function updatestate(){
-    //   const rootRef = firebase.database().ref().child('Vendor');
-    //   const emailRef = rootRef.child('01').child('Email');
-    //   const passwordRef = rootRef.child('01').child('Password');
-    //   console.log('email and pass are: '+ this.state.email,this.state.password);
-
-    //    emailRef.on('value',snap => {
-    //     this.setState({
-    //       email: snap.val()
-    //     });
-    //   });
-
-    //   passwordRef.on('value',snap => {
-    //     this.setState({
-    //       password: snap.val()
-    //     });
-    //   });
-  
-    // }
-
-
     this.loginHandle = () => {
-      // await updatestate();
-      
-      // const rootRef = firebase.database().ref().child('Vendor');
-      // const emailRef = rootRef.child('01').child('Email');
-      // const passwordRef = rootRef.child('01').child('Password');
-
-      
-
-      // emailRef.on('value',snap => {
-      //   this.setState({
-      //     email: snap.val()
-      //   });
-      // });
-      // passwordRef.on('value',snap => {
-      //   this.setState({
-      //     password: snap.val()
-      //   });
-      // });
-
-      console.log('email and pass are: '+ this.state.email,this.state.password);
-    
 
       if(this.state.email === this.refs.email.value && this.state.password === this.refs.pass.value){
         this.setState({loggedIn:true})   
-        sessionStorage.setItem("loggedIn",true)
-        console.log(sessionStorage.getItem("loggedIn"));
+        sessionStorage.setItem("loggedIn","true")
+        console.log("on click added: "+sessionStorage.getItem("loggedIn"));
+        this.setState({redirect:true});
+        window.location.reload();
+        
       }else{
 
         console.log("incorrect user/pass");       
@@ -111,24 +73,27 @@ class Homepage extends Component {
   }
 
   render() {
+
+    const { redirect } = this.state;
+    if (redirect===true) {
+      return <Redirect to=''/>;
+    }
+
     return (
      <div className='container-fluid'>
-        <h1 className="title">Login</h1>
+       
 
-        <form className='poop'>
+        <form className='poop'> 
+        <h1 className="title">Login</h1>
         <label>
-        Email:
-        <br/>
-        <input type="text" placeholder="Email" name="email" ref="email" />
+        <input type="text" className="fadeIn1" placeholder="Email" name="email" ref="email" />
         </label>
         <br/>
         <label>
-        Password:
-        <br/>
-        <input type="password" placeholder="Password" name="password" ref="pass" />
+        <input type="password" placeholder="Password" className="fadeIn2" name="password" ref="pass" />
         </label>
         <br/>
-        <input type="button" value="Login" onClick={this.loginHandle.bind(this)} />
+        <input type="button" className="fadeIn3" value="Login" onClick={this.loginHandle.bind(this)} />
         </form>
         <br/>
         <div className="dbStuff">

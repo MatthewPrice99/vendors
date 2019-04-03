@@ -2,16 +2,33 @@
 
 body{
     .container-fluid{
+
         .title{
            position: relative;
-           padding-top: 10%;
-           left: 40%;
+           padding-top: 5%;
+           text-shadow: 0 30px 60px 0;
+           
         }
       
        .poop{
            position: relative;
-           padding-top: 20px;
-           left: 40%;         
+           margin-top: 10%;
+           padding: 20px;
+           width: 300px;
+           left: 40%;  
+           background: $lightGrey;
+           box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+           
+           
+           .fadeIn1,.fadeIn2{
+               background: $vanillaCust;
+
+               &:hover{
+                   background: lightblue;
+                   color: black;
+                @include transition(.4s ease-in-out);
+               }
+           }
        }
     } 
 }
@@ -24,39 +41,42 @@ header{
     background: $black;
     color: $white;
     height: 90px;
-    
 
-    .logo{
+
+    .logo{    
         position: absolute;
         top: 50%; right:10%;
         @include translateY(-50%);
 
     }
+    
+
     nav{
         position: absolute;
         left:15px;
         @include translateY(50%);
-        
+    
         ul{
-            list-style-type: none;
+            list-style-type: none;     
         }
+        
 
         ul li{
+            
             display: inline-block;
             margin-right: 20px;
-
-            &.last{
-                margin: 0px;
-            }
-            a{
+            
+            a{            
+                
                 font-size: 25px;
                 line-height: normal;
-                color: $white;
+                color: $white;  
                 
 
                 &:hover{
                     text-decoration: none;
                     color: $red;
+
 
                 }
             }

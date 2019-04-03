@@ -3,24 +3,31 @@ import * as firebase from 'firebase';
 import { BrowserRouter } from 'react-router-dom';
 
 
+
+
 class Register extends Component {
  
   render() {
     return (
      <div className='container-fluid'>
-        <h1 className="title">Register</h1>
+        
 
         <form className='poop'>
+        <h1 className="title">Register</h1>
         <label>
-        Email:
-        <br/>
-        <input type="text" placeholder="Email" name="email" />
+        <input type="email" className="fadeIn1" placeholder="Email" name="email" />
         </label>
-        <br/>
         <label>
-        Password:
-        <br/>
-        <input type="text" placeholder="Password" name="password" />
+        <input type="password" className="fadeIn1" placeholder="Password" name="password" />
+        </label>
+        <label>
+        <input type="password" className="fadeIn1" placeholder="Confirm Password" name="password2" />
+        </label>
+        <label>
+        <input type="text" className="fadeIn1" placeholder="Restaurant Name" name="name" />
+        </label>
+        <label>
+        <input type="text" className="fadeIn1" placeholder="Address" name="address" />
         </label>
         <br/>
         <input type="submit" value="Submit" />

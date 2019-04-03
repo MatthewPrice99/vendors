@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 
-class Header extends Component {
+class Header2 extends Component {
   render() {
     return (
      <header>
@@ -14,17 +14,19 @@ class Header extends Component {
                  <li className="first">
                     <NavLink to='/' exact activeStyle={
                         {color : 'red'}
-                    }>Login</NavLink>
+                    }>Home</NavLink>
                  </li>
                  <li>
-                    <NavLink to='/register' exact activeStyle={
+                    <NavLink to='/update' exact activeStyle={
                         {color : 'red'}
-                    }>Register</NavLink>
+                    }>Update Items</NavLink>
                  </li>
-                 <li>
-                    <NavLink to='/about' exact activeStyle={
+
+                 
+                 <li className ="logout">
+                    <NavLink to='/logout' exact activeStyle={
                         {color : 'red'}
-                    }>About</NavLink>
+                    }>Logout</NavLink>
                  </li>
              </ul>
          </nav>
@@ -36,4 +38,4 @@ class Header extends Component {
   }
 }
 
-export default Header;
+export default Header2;
