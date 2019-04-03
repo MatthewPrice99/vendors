@@ -14,10 +14,13 @@ import Header2 from './components/headerComponent/header2';
 
 //includes
 import './Assets/css/default.min.css'
-
 console.log('sessionstorage:'+sessionStorage.getItem("loggedIn"));
 
+
+
 class App extends Component {
+  
+ 
   render() {
     //declare what nav I want
     let navbar;
@@ -73,10 +76,9 @@ class App extends Component {
 
           <Route path ="/logout" exact strict render={
               ()=>{
-                sessionStorage.setItem("loggedIn",false);  
+                sessionStorage.setItem("loggedIn",false);
                 navbar = <Header/>
                 return <Redirect to='/' />
-              
               }
            }/> 
 

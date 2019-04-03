@@ -6,12 +6,32 @@ import { BrowserRouter } from 'react-router-dom';
 
 
 class Register extends Component {
+
+  constructor(){
+    super();
+
+    this.state = {
+      email:'',
+      password:'',
+      confirmpass:'',
+      restname:'',
+      address:''
+    };
+  }
+
+  componentDidMount(){
+
+    const rootRef = firebase.database().ref().child('Vendor');
+    const nameRef = rootRef.child('01').child('Name');
+    const emailRef = rootRef.child('01').child('Email');
+    const passwordRef = rootRef.child('01').child('Password');
+
+    
+  }
  
   render() {
     return (
-     <div className='container-fluid'>
-        
-
+     <div className='container-fluid'>       
         <form className='poop'>
         <h1 className="title">Register</h1>
         <label>
@@ -31,9 +51,7 @@ class Register extends Component {
         </label>
         <br/>
         <input type="submit" value="Submit" />
-        </form>
-
-      
+        </form> 
      </div>
     );
   }
