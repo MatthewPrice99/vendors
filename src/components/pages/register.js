@@ -11,51 +11,78 @@ class Register extends Component {
     super();
 
     this.state = {
-      data: ['GROCERIES','VEGETARIAN','ITALIAN','CHINESE','THAI','AMERICAN','HALAL','MEXICAN','BAKERY','INDIAN','EUROPEAN'],
+      data: [],
       email:'',
       password:'',
       confirmpass:'',
       restname:'',
       address:'',
       cat:'',
-      random:''
+      random:'',
+      dbCount:0    
     };
 
-    this.writeDB = () =>{
-      //set info based on submit
-      this.setState((prevState,props)=>({
-        email: this.refs.email.value,
-        password:this.refs.pass.value,
-        confirmpass:this.refs.passconfirm.value,
-        restname:this.refs.restname.value,
-        address:this.refs.address.value,
-        cat:this.refs.cat.value,
+   
 
-      }),()=>{
-       const rootRef = firebase.database().ref().child('Vendor').child('01');
-      if(this.state.email === 'testcase@gmail.com'){
-        console.log("confirmed email is: ",this.state.email);
-        rootRef.set({
-          CategoryId: this.state.cat,
-          Email: this.state.email,
-          Location: this.state.address,
-          Name: this.state.restname,
-          Password: this.state.password         
-        }).then(function(){
-          console.log("data written successfully.")
-        }).catch(function(error){
-          console.log("error writing to the database: ",error);
+      this.writeDB = () =>{ 
+      //get current count of vendors on page load
+      //possible issues with this if someone registers after it does the check 
+      let data = [];      
+      const rootRef2 = firebase.database().ref().child('Vendor');
+      rootRef2.on('value',snap=>{
+        snap.forEach(ss =>{
+          data.push(ss.val());
         });
-      }
-      else{
-        console.log("incorrect email for testing.",this.state.email);
-      }
-      });
+        console.log(data.length);
+      //set info based on submit
+        this.setState((prevState,props)=>({
+          email: this.refs.email.value,
+          password:this.refs.pass.value,
+          confirmpass:this.refs.passconfirm.value,
+          restname:this.refs.restname.value,
+          address:this.refs.address.value,
+          cat:this.refs.cat.value,
+          dbCount: data.length
+        }),()=>{
+
+        //a test for the state
+        console.log('testimg: '+'0'+(this.state.dbCount+1).toString());
+        //
+
+        const rootRef = firebase.database().ref().child('Vendor').child('0'+(this.state.dbCount+1).toString());
+        if(this.state.email === 'testcase@gmail.com'){
+          console.log("confirmed email is: ",this.state.email);
+          rootRef.set({
+            CategoryId: this.state.cat,
+            Email: this.state.email,
+            Location: this.state.address,
+            Name: this.state.restname,
+            Password: this.state.password         
+          }).then(function(){
+            console.log("data written successfully.")
+          }).catch(function(error){
+            console.log("error writing to the database: ",error);
+          });
+        }
+        else{
+          console.log("incorrect email for testing.",this.state.email);
+        }
+        });
+      })  
     }   
   }
+  componentDidMount(){
+     //get category from DB and populate form with on page load
+     const catRef = firebase.database().ref().child('Category');
+     let pops = [];
+       catRef.on('value',snap=>{    
+         snap.forEach(ss =>{
+           pops.push(ss.val().Name);
+         });
+         this.setState({data:pops});
+       });
+    }
 
-  
- 
   render() {
     return (
      <div className='container-fluid'>       
