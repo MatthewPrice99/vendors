@@ -97,22 +97,6 @@ class Register extends Component {
        this.setState({data:pops});
      });
 
-      //get current count of vendors on page load
-      //possible issues with this if someone registers after it does the check 
-      // let data = [];
-      // const rootRef2 = firebase.database().ref().child('Vendor');
-      // rootRef2.on('value',snap=>{    
-      //   snap.forEach(ss =>{
-      //     data.push(ss.val());
-          
-      //   });
-      //   console.log(data.length);
-      //   this.setState((prevState,props)=>({
-      //       dbCount:data.length   
-      //     }),()=>{
-      //     console.log('check if correct: '+'0'+(this.state.dbCount+1).toString());
-      //   });
-      // });
  }
 
   render() {
