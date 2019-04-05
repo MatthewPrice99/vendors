@@ -19,6 +19,21 @@ body{
            background: $lightGrey;
            box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
 
+           .dropBox{
+            padding: 3px;
+            margin-bottom: 5px;
+            background-color: #f1f1f1;
+            min-width: 160px;
+            z-index: 1;
+
+            &:hover{                
+                text-decoration: none;
+                background-color: lightblue; 
+                @include transition(.4s ease-in-out);
+     
+            }
+          }
+
            .fadeIn3{
             background: $vanillaCust;
             width: 240px;

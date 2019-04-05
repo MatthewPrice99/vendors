@@ -27,15 +27,17 @@ class Homepage extends Component {
       email: '',
       password: '',
       redirect: false,
-      data: {}
+      data: {},
+      IDs: []
     };
 
     this.loginHandle = () => {
+      let counter = 0;
       for(var [key,value] of Object.entries(this.state.data)){   
-
       if(value['key'] === this.refs.email.value && value['value'] === this.refs.pass.value){
-        this.setState({loggedIn:true})   
-        sessionStorage.setItem("loggedIn","true")
+        this.setState({loggedIn:true});
+        sessionStorage.setItem("currentVendor",this.state.IDs[counter]);
+        sessionStorage.setItem("loggedIn","true");
         console.log("on click added: "+sessionStorage.getItem("loggedIn"));
         this.setState({redirect:true});
         window.location.reload();
@@ -44,6 +46,7 @@ class Homepage extends Component {
       }else{
         console.log("incorrect user/pass");       
       } 
+      counter = counter+1
 
     };
    
@@ -56,6 +59,8 @@ class Homepage extends Component {
    const emailRef = rootRef.child('01').child('Email');
    const passwordRef = rootRef.child('01').child('Password');
 
+
+   let uniqueIDs = [];
    let pops = [];
    rootRef.on('value',snap=>{    
      snap.forEach(ss =>{
@@ -63,8 +68,10 @@ class Homepage extends Component {
          key: ss.val().Email,
          value: ss.val().Password
        });
+       uniqueIDs.push(ss.key);
      });
-     this.setState({data:pops});
+     this.setState({data:pops,IDs:uniqueIDs});
+    //  console.log(this.state.IDs);    
    });
 
       emailRef.on('value',snap => {
@@ -110,12 +117,6 @@ class Homepage extends Component {
         </form>
         <br/>
         <div className="dbStuff">
-        
-        {this.state.name}
-        <br/>
-        {this.state.email}
-        <br/>
-        {this.state.password}
         </div>
        
 

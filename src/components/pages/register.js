@@ -61,17 +61,17 @@ class Register extends Component {
         this.refs.restname.value = '';
 
        const rootRef = firebase.database().ref().child('Vendor');
-      if(this.state.email === 'testcase@gmail.com'){
-        console.log("confirmed email is: ",this.state.email);
+      if(this.state.password === this.state.confirmpass){
+        // console.log("confirmed email is: ",this.state.email);
         rootRef.push({
           CategoryId: this.state.cat,
           Email: this.state.email,
           Location: this.state.address,
           Name: this.state.restname,
           Password: this.state.password,
-          Image: this.state.pic,
+          Image: "https://cdn.doordash.com/media/restaurant/cover/BarqueSmokehouse_Toronto.png",
           PickupMax: "10:00pm",
-          Rating: "1"       
+          Rating: "3"       
         }).then(function(){
           console.log("data written successfully.");
           window.alert("You have registered successfully.");
@@ -80,7 +80,8 @@ class Register extends Component {
         });
       }
       else{
-        console.log("incorrect email for testing.",this.state.email);
+        window.alert("Please make sure both passwords are the same.");
+        console.log("Passwords dont match.");
       }
       });
     }   
@@ -138,9 +139,9 @@ class Register extends Component {
         <input type="file" className="fadeIn3" placeholder="Address" name="pic" ref="pic" accept="image/*"/>
         </label>
         <br/>
-        Select type of food <select ref="cat">{this.state.data.map((x,y) => <option key={y+1}>{x}</option>)}</select>
+        Select type of food <select className="dropBox" ref="cat">{this.state.data.map((x,y) => <option key={y+1}>{x}</option>)}</select>
         <br/>
-        <input type="button" value="Register"onClick={this.writeDB.bind(this)}/>
+        <input type="button" value="Register" className="fadeIn2" onClick={this.writeDB.bind(this)}/>
         </form> 
      </div>
     );
