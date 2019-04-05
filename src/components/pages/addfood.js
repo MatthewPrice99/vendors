@@ -20,6 +20,8 @@ class Addfood extends Component {
     };
   
     this.writeDB = () =>{
+      const vendRef = firebase.database().ref().child('Vendor').child(sessionStorage.getItem("currentVendor"));
+
         
       //set info based on submit
       this.setState((prevState,props)=>({
@@ -45,7 +47,7 @@ class Addfood extends Component {
           PickupTime: this.state.PickupTime,
           PrepareDate: new Date().toDateString(),
           Price: this.state.price,
-          VendorAdress: this.state.Location,
+          VendorAdress: this.state.location,
           VendorId: sessionStorage.getItem("currentVendor")
 
         }).then(function(){

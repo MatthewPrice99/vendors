@@ -3,8 +3,6 @@ import * as firebase from 'firebase';
 // import { BrowserRouter } from 'react-router-dom';
 
 
-
-
 class Register extends Component {
 
   constructor(){
