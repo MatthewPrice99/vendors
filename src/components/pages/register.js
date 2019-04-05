@@ -33,7 +33,14 @@ class Register extends Component {
       });
   
       this.writeDB = () =>{
-        //check styff
+      
+      //assign catID
+      let catId;
+      if((this.state.data.indexOf(this.refs.cat.value)+1)<10){
+        catId = '0'+(this.state.data.indexOf(this.refs.cat.value)+1).toString()
+      }else{
+        catId = (this.state.data.indexOf(this.refs.cat.value)+1).toString()
+      }
         
       //set info based on submit
       this.setState((prevState,props)=>({
@@ -42,7 +49,8 @@ class Register extends Component {
         confirmpass:this.refs.passconfirm.value,
         restname:this.refs.restname.value,
         address:this.refs.address.value,
-        cat: '0'+(this.state.data.indexOf(this.refs.cat.value)+1).toString()
+        cat: catId
+        //'0'+(this.state.data.indexOf(this.refs.cat.value)+1).toString()
 
       }),()=>{
        const rootRef = firebase.database().ref().child('Vendor');
