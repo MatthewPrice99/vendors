@@ -125,6 +125,28 @@ class Update extends Component {
    });
   };
 
+  //Delete Vendor
+  this.delAll = ()=>{
+    //assign root ref for DB
+    let currentVend = sessionStorage.getItem("currentVendor");
+    if(currentVend === null){
+      currentVend = "01"
+    }
+    const vendRef = firebase.database().ref().child('Vendor').child(currentVend);
+    //get new updated data
+    let newInfo = prompt("Please enter YES if sure.", );
+    //console it to make sure
+    console.log(newInfo);
+    //update DB
+    if(newInfo === "YES"){
+       vendRef.remove();
+       sessionStorage.setItem("loggedIn",false);
+       window.location.reload();
+    }else{
+      console.log('GOOD CHOICE!');
+    }
+};
+
   //Update PickupTime Name
   this.updateInfoPickup = ()=>{
     //assign root ref for DB
@@ -172,8 +194,6 @@ class Update extends Component {
     }
   });
   };
-  
-
   }
   componentDidMount(){
     
@@ -246,6 +266,7 @@ class Update extends Component {
     </tr>
   </tbody>
 </table>
+<input type="button" value="Delete Account" className="delAll" ref="help" onClick={this.delAll.bind(this)}/>
 </div>
     );
   }

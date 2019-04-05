@@ -12,6 +12,8 @@ import Update from './components/pages/update';
 import Header2 from './components/headerComponent/header2';
 import Admin from './components/pages/admin';
 import Addfood from './components/pages/addfood';
+import Database2 from './components/pages/database2';
+
 
 
 
@@ -72,6 +74,12 @@ class App extends Component {
           <Route path ="/register" exact strict render={
             ()=>{
               return <Register/>
+            }
+          }/> 
+
+          <Route path ="/database" exact strict render={
+            ()=>{
+              return <Database2/>
             }
           }/> 
           
