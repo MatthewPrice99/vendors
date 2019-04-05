@@ -291,6 +291,10 @@ class Update extends Component {
   </tbody>
 </table>
 <input type="button" value="Delete Account" className="delAll" ref="help" onClick={this.delAll.bind(this)}/>
+<br/>
+<h1 className="titleUpdate2">Current Associated Image</h1>
+<br/>
+<img className="imgCon"src={this.state.image} alt="Vendor Main img"></img>
 </div>
     );
   }

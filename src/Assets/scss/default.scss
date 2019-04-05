@@ -1,14 +1,39 @@
 @import "_config.scss";
 
 body{
+
+    .imgCon{
+        width: 300x;
+        height: 250px;
+        opacity: 0.8;
+
+    }
+    .delAll{
+        background-color: lightgrey;
+        background: lightgrey;
+        
+    }
     .titleUpdate{
         background: darkgrey;
         margin: 0%;
     }
-  
- 
+   .carousel{
+            position: relative;
+            left: 37%; 
+            padding-top: 1%;
+            padding-top: 5%;
+            
+            .mySlides{
+                width: 400px;
+                height: 250px;
+
+            }
+             
+        }
+
 
     .container-fluid{
+        
 
         .title{
            position: relative;
@@ -22,7 +47,7 @@ body{
            margin-top: 10%;
            padding: 20px;
            width: 300px;
-           left: 40%;  
+           left: 38%;  
            background: $lightGrey;
            box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
 
@@ -62,6 +87,8 @@ body{
             }
 
            }
+        
+       
            
            
            .fadeIn1,.fadeIn2{

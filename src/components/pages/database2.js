@@ -3,78 +3,140 @@ import * as firebase from 'firebase';
 
 class Database2 extends Component {
 
-  constructor(){
+  constructor(props){
     super();
 
     this.state = {
-        data: {},
-        collection:{},
-        entry:{},
-        name:{}
+        tech: 'select',
+        category: '',
+        food: '',
+        request: '',
+        user: '',
+        name: '',
+        vendor: '',
+        catArr: [],
+        foodArr: [],
+        ratingArr: [],
+        requestArr: [],
+        userArr: [],
+        vendorArr: [],
+        dbCount: 0
     };
 
-//search
+    
+    this.writeDB = () => {
+      var data = [];
+      this.setState((prevState, props) => ({
+        category: this.refs.cat.value,
+        dbCount: data.length
+      }), () => {
+        console.log('testing: '+'0'+(this.state.dbCount+1).toString());
+        const catRef2 = firebase.database().ref().child(this.state.tech).child('0'+(this.state.dbCount+1).toString());
+        catRef2.set({
+          CategoryId: this.state.cat,
+          Food: this.state.food        
+        }).then(function(){
+          console.log("data written successfully.")
+        }).catch(function(error){
+          console.log("error writing to the database: ",error);
+        });
+      });
+    }
 
+    this.searchDB = () => {
+        const jsonObj = document.getElementById('jsonObj');
+        const dbsRef = firebase.database().ref().child(this.state.tech)
+        const dbsRef2 = firebase.database().ref().child(this.state.tech).child('Name');
+        // if (dbsRef.child('Name') === this.state.name) {
+        //     dbsRef = dbsRef.child(this.state.name)
+        // }
+        // switch (this.state.name) {
+        //     case dbsRef2
+
+        // }
+
+        dbsRef.on('value',snap=>{
+            const jsonDb2 = JSON.stringify(snap.val(), null, 3);
+            console.log(jsonDb2);
+            jsonObj.innerText = JSON.stringify(snap.val(), null, 3);
+            console.log('Child of child ' + JSON.stringify(snap.val(), null, 3));
+        })
+
+        dbsRef2.on('value',snap=>{
+            const jsonDb2 = JSON.stringify(snap.val(), null, 3);
+            console.log(jsonDb2);
+        })
+    }
+
+    this.editDB = () => {
+        const jsonObj = document.getElementById('jsonObj');
+        const dbsRef = firebase.database().ref().child(this.state.tech)
+
+    }
+
+    this.deleteDB = () => {
+        
+
+    }
+
+    this.optSel = (e) => {
+        this.setState((prevState, props) => ({
+            tech: this.refs.dropBox.value
+        }), () => {
+            console.log("state of select " + this.state.tech);
+        });
+    }
+
+        // this.optSel = (e) => {
+        //     this.setState((prevState, props) => ({
+        //         tech: e.target.value
+        //     }), () => {
+        //         console.log("state of select" + this.state.tech)
+        //     })
+        // }   
   } 
-  componentDidMount(){
 
-//get all from DB and populate form with on page load
-   const rootRef = firebase.database().ref();
-   let pops = [];
-     rootRef.on('value',snap=>{  
-       pops = snap.val()
-    this.setState({data:pops});
-       console.log(this.state.data['Food']['01']['Name']);
-
-
-       this.addAll = ()=>{
-       
-       let col = [];
-       let ent = [];
-       let nam = [];
-
-       for(let collection in this.state.data){
-           col.push(collection);
-           for(let entry in collection){
-               ent.push(entry);
-               for(let name in entry){
-                   nam.push(name);
-               }
-           }   
-       }
-       this.setState({
-           collection: col,
-           entry:ent,
-           name:nam
-       });
-    };
-    this.addAll();
-});
-     
-// this.searchDB = (x)=>{
-// let results = [];
-// let toSearch = x;
-// for(var i=0; i<pops.length; i++) {
-//   for(let key in pops[i]) {
-//     if(pops[i][key].indexOf(toSearch)!=-1) {
-//       results.push(pops[i]);
-//     }
-//   }
-// }
-// console.log(results);
-// };
-
-// this.searchDB('01');
-
-}
   render() {
     return (
         <div className='container-fluid'>
-            <h1>Admin Database</h1>
-            <br/>
-            {console.log(this.collection)}            
+            <h1>Admin 2 JSON</h1>
+            <hr></hr>
+            <form>
+                <select id="choose" ref="dropBox" onChange={this.optSel.bind(this)} value={this.state.tech}>
+                    <option value="Category" ref="opt">Category</option>
+                    <option value="Food" ref="opt">Food</option>
+                    <option value="Rating" ref="opt">Rating</option>
+                    <option value="Requests" ref="opt">Requests</option>
+                    <option value="User" ref="opt">User</option>
+                    <option value="Vendor" ref="opt">Vendor</option>
+                </select>  
+                <input type="text" className="fadeIn1" placeholder="Search" name="name" ref="name"></input>
+                <input type="button" value="Search" onClick={this.searchDB.bind(this)}/>
+                <input type="button" value="Add" onClick={this.writeDB.bind(this)}/>
+                <input type="button" value="Edit" onClick={this.editDB.bind(this)}/>
+                <input type="button" value="Delete" onClick={this.deleteDB.bind(this)}/>
+            </form>
+            <hr></hr>
+            <div id="jsonObj"></div>
         </div>
         );
+    }
+
+    componentDidMount(){
+        const db = firebase.database();
+        const dbRef = db.ref();
+        const categoryRef = db.ref().child('Category');
+        const foodRef = db.ref().child('Food');
+        const ratingRef = db.ref().child('Rating');
+        const requestRef = db.ref().child('Requests');
+        const userRef = db.ref().child('User');
+        const vendorRef = db.ref().child('Vendor');
+        
+        const jsonObj = document.getElementById('jsonObj');
+
+        dbRef.on('value',snap=>{
+            jsonObj.innerText = JSON.stringify(snap.val(), null, 3);
+        })
     }
 }
 

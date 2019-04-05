@@ -5,10 +5,6 @@ import App from '../../App';
 
 
 
-
-
-
-
 console.log(sessionStorage.getItem("loggedIn"));
 let message;
 if(sessionStorage.getItem("loggedIn")!==true){
@@ -90,6 +86,23 @@ class Homepage extends Component {
        name: snap.val()
      });
    });
+
+//carousel control
+// let myIndex = 0;
+// carousel();
+
+// function carousel() {
+//   var i;
+//   var x = document.getElementsByClassName("mySlides");
+//   for (i = 0; i < x.length; i++) {
+//     x[i].style.display = "none";  
+//   }
+//   myIndex++;
+//   if (myIndex > x.length) {myIndex = 1}    
+//   x[myIndex-1].style.display = "block";  
+//   setTimeout(carousel, 4000); // Change image every 2 seconds
+// }
+
   }
 
   render() {
@@ -100,9 +113,14 @@ class Homepage extends Component {
     }
 
     return (
-     <div className='container-fluid'>
-       
+     <div className='container-fluid'> 
+     {/* <div className="carousel">
+  <img className="mySlides" src="https://cdn.doordash.com/media/restaurant/cover/BarqueSmokehouse_Toronto.png" ></img>
+  <img className="mySlides" src="https://www.clubhalal.ca/wp-content/uploads/2018/10/dbfaaa7ff36d4ff58eaf0f3ac6ccbf01_D@2x.jpg" ></img>
+  <img className="mySlides" src="https://static1.squarespace.com/static/5a137abae9bfdfb7768f2171/t/5a138421085229fa0466b7c9/1521162143029/designcrowd_609639_13403942_2516859_b4047929_image.png?format=1500w" ></img>
+    </div> */}
 
+   
         <form className='poop'> 
         <h1 className="title">Login</h1>
         <label>

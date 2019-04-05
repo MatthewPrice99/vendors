@@ -43,14 +43,14 @@ class App extends Component {
 
   }
 
-  refreshOnce = ()=>{
-    window.location.reload();
+  // refreshOnce = ()=>{
+  //   window.location.reload();
 
-    setTimeout(function(){
-      console.log('timeout done');
+  //   setTimeout(function(){
+  //     console.log('timeout done');
 
-    },40000000);
-  };
+  //   },40000000);
+  // };
   
  
   render() {
