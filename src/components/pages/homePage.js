@@ -119,8 +119,6 @@ class Homepage extends Component {
         <div className="dbStuff">
         </div>
        
-
-      
      </div>
     );
   }

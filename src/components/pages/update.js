@@ -42,6 +42,10 @@ class Update extends Component {
     //console it to make sure
     console.log(newInfo);
     //update DB
+    if(newInfo===null || newInfo ===''){
+      window.alert("Enter information. Do not leave field blank.");
+      return;
+     }
     vendRef.update({
       Name: newInfo
     },function(error){
@@ -66,6 +70,10 @@ class Update extends Component {
    //console it to make sure
    console.log(newInfo);
    //update DB
+   if(newInfo===null || newInfo ===''){
+    window.alert("Enter information. Do not leave field blank.");
+    return;
+   }
    vendRef.update({
      Email: newInfo
    },function(error){
@@ -90,6 +98,10 @@ class Update extends Component {
     //console it to make sure
     console.log(newInfo);
     //update DB
+    if(newInfo===null || newInfo ===''){
+      window.alert("Enter information. Do not leave field blank.");
+      return;
+     }
     vendRef.update({
       Location: newInfo
     },function(error){
@@ -114,6 +126,10 @@ class Update extends Component {
    //console it to make sure
    console.log(newInfo);
    //update DB
+   if(newInfo===null || newInfo ===''){
+    window.alert("Enter information. Do not leave field blank.");
+    return;
+   }
    vendRef.update({
      Image: newInfo
    },function(error){
@@ -160,6 +176,10 @@ class Update extends Component {
     //console it to make sure
     console.log(newInfo);
     //update DB
+    if(newInfo===null || newInfo ===''){
+      window.alert("Enter information. Do not leave field blank.");
+      return;
+     }
     vendRef.update({
       PickupMax: newInfo
     },function(error){
@@ -184,6 +204,10 @@ class Update extends Component {
   //console it to make sure
   console.log(newInfo);
   //update DB
+  if(newInfo===null || newInfo ===''){
+    window.alert("Enter information. Do not leave field blank.");
+    return;
+   }
   vendRef.update({
     Password: newInfo
   },function(error){
