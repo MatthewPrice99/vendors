@@ -22,23 +22,41 @@ console.log('sessionstorage:'+sessionStorage.getItem("loggedIn"));
 
 
 class App extends Component {
+  constructor(){
+    super();
+    this.state = {
+      navbar: <Header/>
+    }
+  }
+  componentDidMount(){
+
+    if(sessionStorage.getItem("loggedIn")==="true"){
+        this.setState({navbar:<Header2/>});
+    }else{
+      this.setState({navbar:<Header/>});
+    }
+    
+
+
+
+  }
+
+  refreshOnce = ()=>{
+    window.location.reload();
+
+    setTimeout(function(){
+      console.log('timeout done');
+
+    },40000000);
+  };
   
  
   render() {
-    //declare what nav I want
-    let navbar;
-
-    if(sessionStorage.getItem("loggedIn")==="true"){
-      navbar = <Header2/>
-    }
-    else{
-      navbar = <Header/>
-    }
 
     return (
       <BrowserRouter>
         <div className="App">
-        {navbar}
+        {this.state.navbar}
 
           <Route path ="/" exact strict render={
             ()=>{
@@ -101,7 +119,7 @@ class App extends Component {
               ()=>{
                 sessionStorage.setItem("loggedIn",false);
                 sessionStorage.setItem("currentVendor",null);
-                navbar = <Header/>
+                this.setState({navbar:<Header/>}); 
                 return <Redirect to='/' />
               }
            }/> 

@@ -11,11 +11,11 @@ class Header2 extends Component {
 
          <nav>
              <ul>
-                 {/* <li className="first">
-                    <NavLink to='/' exact activeStyle={
+                 <li className="first">
+                    <NavLink to='/addfood' exact activeStyle={
                         {color : 'red'}
-                    }>Home</NavLink>
-                 </li> */}
+                    }>Add Food Item</NavLink>
+                 </li>
                  <li>
                     <NavLink to='/update' exact activeStyle={
                         {color : 'red'}
