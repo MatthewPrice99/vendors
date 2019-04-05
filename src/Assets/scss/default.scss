@@ -18,6 +18,18 @@ body{
            left: 40%;  
            background: $lightGrey;
            box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+
+           .fadeIn3{
+            background: $vanillaCust;
+            width: 240px;
+
+            &:hover{
+                background: lightblue;
+                color: black;
+             @include transition(.4s ease-in-out);
+            }
+
+           }
            
            
            .fadeIn1,.fadeIn2{

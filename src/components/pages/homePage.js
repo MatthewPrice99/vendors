@@ -26,23 +26,27 @@ class Homepage extends Component {
       name : "",
       email: '',
       password: '',
-      redirect: false
+      redirect: false,
+      data: {}
     };
 
     this.loginHandle = () => {
+      for(var [key,value] of Object.entries(this.state.data)){   
 
-      if(this.state.email === this.refs.email.value && this.state.password === this.refs.pass.value){
+      if(value['key'] === this.refs.email.value && value['value'] === this.refs.pass.value){
         this.setState({loggedIn:true})   
         sessionStorage.setItem("loggedIn","true")
         console.log("on click added: "+sessionStorage.getItem("loggedIn"));
         this.setState({redirect:true});
         window.location.reload();
+        return;
         
       }else{
-
         console.log("incorrect user/pass");       
+      } 
 
-      }    
+    };
+   
     }
   }
   componentDidMount(){
@@ -52,7 +56,16 @@ class Homepage extends Component {
    const emailRef = rootRef.child('01').child('Email');
    const passwordRef = rootRef.child('01').child('Password');
 
-      
+   let pops = [];
+   rootRef.on('value',snap=>{    
+     snap.forEach(ss =>{
+       pops.push({
+         key: ss.val().Email,
+         value: ss.val().Password
+       });
+     });
+     this.setState({data:pops});
+   });
 
       emailRef.on('value',snap => {
         this.setState({
@@ -93,7 +106,7 @@ class Homepage extends Component {
         <input type="password" placeholder="Password" className="fadeIn2" name="password" ref="pass" />
         </label>
         <br/>
-        <input type="button" className="fadeIn3" value="Login" onClick={this.loginHandle.bind(this)} />
+        <input type="button" className="fadeIn2" value="Login" onClick={this.loginHandle.bind(this)} />
         </form>
         <br/>
         <div className="dbStuff">

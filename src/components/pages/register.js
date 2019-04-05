@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
-import { BrowserRouter } from 'react-router-dom';
+// import { BrowserRouter } from 'react-router-dom';
 
 
 
@@ -18,7 +18,7 @@ class Register extends Component {
       restname:'',
       address:'',
       cat:'',
-      random:'',
+      pic:'',
       dbCount:0    
     };
 
@@ -49,10 +49,17 @@ class Register extends Component {
         confirmpass:this.refs.passconfirm.value,
         restname:this.refs.restname.value,
         address:this.refs.address.value,
-        cat: catId
-        //'0'+(this.state.data.indexOf(this.refs.cat.value)+1).toString()
+        cat: catId,
+        pic: this.refs.pic.value
 
       }),()=>{
+        //reset fields
+        this.refs.address.value = '';
+        this.refs.email.value = '';
+        this.refs.pass.value = '';
+        this.refs.passconfirm.value = '';
+        this.refs.restname.value = '';
+
        const rootRef = firebase.database().ref().child('Vendor');
       if(this.state.email === 'testcase@gmail.com'){
         console.log("confirmed email is: ",this.state.email);
@@ -61,9 +68,13 @@ class Register extends Component {
           Email: this.state.email,
           Location: this.state.address,
           Name: this.state.restname,
-          Password: this.state.password         
+          Password: this.state.password,
+          Image: this.state.pic,
+          PickupMax: "10:00pm",
+          Rating: "1"       
         }).then(function(){
-          console.log("data written successfully.")
+          console.log("data written successfully.");
+          window.alert("You have registered successfully.");
         }).catch(function(error){
           console.log("error writing to the database: ",error);
         });
@@ -122,6 +133,9 @@ class Register extends Component {
         </label>
         <label>
         <input type="text" className="fadeIn1" placeholder="Address" name="address" ref="address" />
+        </label>
+        <label>
+        <input type="file" className="fadeIn3" placeholder="Address" name="pic" ref="pic" accept="image/*"/>
         </label>
         <br/>
         Select type of food <select ref="cat">{this.state.data.map((x,y) => <option key={y+1}>{x}</option>)}</select>
