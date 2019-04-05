@@ -78,22 +78,6 @@ class Addfood extends Component {
        this.setState({data:pops});
      });
 
-      //get current count of vendors on page load
-      //possible issues with this if someone registers after it does the check 
-      // let data = [];
-      // const rootRef2 = firebase.database().ref().child('Vendor');
-      // rootRef2.on('value',snap=>{    
-      //   snap.forEach(ss =>{
-      //     data.push(ss.val());
-          
-      //   });
-      //   console.log(data.length);
-      //   this.setState((prevState,props)=>({
-      //       dbCount:data.length   
-      //     }),()=>{
-      //     console.log('check if correct: '+'0'+(this.state.dbCount+1).toString());
-      //   });
-      // });
  }
 
   render() {
@@ -105,7 +89,7 @@ class Addfood extends Component {
         <input type="text" className="fadeIn1" placeholder="Item Name" name="name" ref="name" />
         </label>
         <label>
-        <input type="text" className="fadeIn1" placeholder="Pickup Time" name="pickup" ref="pickupTime" />
+        <input type="text" className="fadeIn1" placeholder="Max Pickup Time" name="pickup" ref="pickupTime" />
         </label>
         <label>
         <input type="text" className="fadeIn1" placeholder="Price" name="price" ref="price" />
@@ -116,7 +100,7 @@ class Addfood extends Component {
         <label>
         <input type="file" className="fadeIn3" placeholder="Address" name="pic" ref="pic" accept="image/*"/>
         </label>
-        <input type="button" value="Add Item"onClick={this.writeDB.bind(this)}/>
+        <input type="button" className="fadeIn4" value="Add Item"onClick={this.writeDB.bind(this)}/>
         </form> 
      </div>
     );

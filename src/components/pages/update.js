@@ -47,26 +47,40 @@ class Update extends Component {
 
   render() {
     return (
-     <div className='container-fluid'>
-        <h1 className="title">Update</h1>
-        <br/>
-        Welcome back {this.state.restName}
-        <br/>
-        <h2><b>Current Information</b></h2>
-        <br/>
-        Email: {this.state.email}
-        <br/>
-        Displayed picture: <img src= {this.state.image} alt="restPic"></img>
-        <br/>
-        Address: {this.state.location}
-        <br/>
-        Restaurant name: {this.state.restName}
-        <br/>
-        Max pickup time: {this.state.pickupMax}
-        <br/>
-        Rating: {this.state.rating}
-      
-     </div>
+
+<div>
+<h1 className="titleUpdate">Current Vendor Information</h1>
+<table className="table table-dark">
+  <thead>
+    <tr>
+      <th scope="col"><b>Restaurant name:</b></th>
+      <th scope="col">{this.state.restName}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><b>Email:</b></td>
+      <td>{this.state.email}</td>
+    </tr>
+    <tr>
+      <td><b>Displayed picture:</b></td>
+      <td>{this.state.image}</td>
+    </tr>
+    <tr>
+      <td><b>Address:</b></td>
+      <td>{this.state.location}</td>
+    </tr>
+    <tr>
+      <td><b>Max pickup time:</b></td>
+      <td>{this.state.pickupMax}</td>
+    </tr>
+    <tr>
+      <td><b>Rating:</b></td>
+      <td>{this.state.rating}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
     );
   }
 }

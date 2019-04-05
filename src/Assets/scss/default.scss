@@ -1,6 +1,13 @@
 @import "_config.scss";
 
 body{
+    .titleUpdate{
+        background: darkgrey;
+        margin: 0%;
+    }
+  
+ 
+
     .container-fluid{
 
         .title{
@@ -36,6 +43,17 @@ body{
            .fadeIn3{
             background: $vanillaCust;
             width: 240px;
+
+            &:hover{
+                background: lightblue;
+                color: black;
+             @include transition(.4s ease-in-out);
+            }
+
+           }
+           .fadeIn4{
+            background: $vanillaCust;
+            width: 227px;
 
             &:hover{
                 background: lightblue;
