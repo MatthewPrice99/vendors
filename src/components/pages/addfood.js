@@ -18,7 +18,6 @@ class Addfood extends Component {
       price:'',
       Location:'',
       pic: null,
-      returnURL:null,
       displayPic:null
     };
 
@@ -34,23 +33,7 @@ class Addfood extends Component {
     }
   
     this.writeDB = () =>{
-      const vendRef = firebase.database().ref().child('Vendor').child(sessionStorage.getItem("currentVendor"));
-      //Upload picture
-      const uploadTask = firebase.storage().ref(`images/${this.state.pic.name}`).put(this.state.pic);
-
-      uploadTask.on('state_changed',(snapshot)=>{
-        //progress
-
-      },(error)=>{
-        //error
-        console.log(error);
-      },()=>{
-        //complete
-        firebase.storage().ref(`images`).child(this.state.pic.name).getDownloadURL().then(url =>{
-          console.log(url);
-          this.setState({returnURL: url});
-        });
-      });
+      const vendRef = firebase.database().ref().child('Vendor').child(sessionStorage.getItem("currentVendor"));     
       //set info based on submit
       this.setState((prevState,props)=>({
         name: this.refs.name.value,
@@ -66,25 +49,40 @@ class Addfood extends Component {
         this.refs.price.value = '';
         const foodRef = firebase.database().ref().child('Food');
 
-        foodRef.push({
-          Available: "Yes",
-          Description: this.state.des,
-          Image: this.state.returnURL,
-          LatLng: "43.650748,-79.430531",
-          Name: this.state.name,
-          PickupTime: this.state.PickupTime,
-          PrepareDate: new Date().toDateString(),
-          Price: this.state.price,
-          VendorAdress: this.state.location,
-          VendorId: sessionStorage.getItem("currentVendor")
+        //Upload picture
+        const uploadTask = firebase.storage().ref(`images/${this.state.pic.name}`).put(this.state.pic);
+        uploadTask.on('state_changed',(snapshot)=>{
+          //progress
+        },(error)=>{
+          //error
+          console.log(error);
+        },()=>{
+          //complete
+          firebase.storage().ref(`images`).child(this.state.pic.name).getDownloadURL().then(url =>{
+            console.log(url);
+            foodRef.push({
+              Available: "Yes",
+              Description: this.state.des,
+              Image: url,
+              LatLng: "43.650748,-79.430531",
+              Name: this.state.name,
+              PickupTime: this.state.PickupTime,
+              PrepareDate: new Date().toDateString(),
+              Price: this.state.price,
+              VendorAdress: this.state.location,
+              VendorId: sessionStorage.getItem("currentVendor")
 
-        }).then(function(){
-          console.log("data written successfully.");
-          window.alert("You have added a food item successfully.");
-        }).catch(function(error){
-          console.log("error writing to the database: ",error);
-        });  
+            }).then(function(){
+              console.log("data written successfully.");
+              window.alert("You have added a food item successfully.");
+            }).catch(function(error){
+              console.log("error writing to the database: ",error);
+            });  
+          });
+        });
       });
+
+      
     }   
   }
   componentDidMount(){

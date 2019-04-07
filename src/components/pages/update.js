@@ -145,17 +145,29 @@ class Update extends Component {
   //Delete Vendor
   this.delAll = ()=>{
     //assign root ref for DB
+    
     let currentVend = sessionStorage.getItem("currentVendor");
+    console.log(currentVend);
     if(currentVend === null){
-      currentVend = "01"
+      window.alert('Something went wrong.')
+      return;
     }
     const vendRef = firebase.database().ref().child('Vendor').child(currentVend);
+    const foodRef = firebase.database().ref().child('Food');
     //get new updated data
     let newInfo = prompt("Please enter YES if sure.", );
     //console it to make sure
     console.log(newInfo);
     //update DB
     if(newInfo === "YES"){
+      foodRef.on('value', snap=>{
+        snap.forEach(ss =>{
+          console.log(ss.val().VendorId);
+          if(ss.val().VendorId === currentVend){
+            foodRef.child(ss.key).remove();   
+          }
+        });
+      });
        vendRef.remove();
        sessionStorage.setItem("loggedIn",false);
        window.location.reload();
