@@ -7,6 +7,7 @@ console.log('update page');
 console.log("session storage holds: "+sessionStorage.getItem("loggedIn"))
 
 
+
    
 class Update extends Component {
   constructor(){

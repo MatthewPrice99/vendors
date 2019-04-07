@@ -24,7 +24,8 @@ class Homepage extends Component {
       password: '',
       redirect: false,
       data: {},
-      IDs: []
+      IDs: [],
+      loaction1: []
     };
 
     this.loginHandle = () => {
@@ -33,6 +34,7 @@ class Homepage extends Component {
       if(value['key'] === this.refs.email.value && value['value'] === this.refs.pass.value){
         this.setState({loggedIn:true});
         sessionStorage.setItem("currentVendor",this.state.IDs[counter]);
+        sessionStorage.setItem("currentLocation",this.state.location1[counter]);
         sessionStorage.setItem("loggedIn","true");
         console.log("on click added: "+sessionStorage.getItem("loggedIn"));
         this.setState({redirect:true});
@@ -58,15 +60,18 @@ class Homepage extends Component {
 
    let uniqueIDs = [];
    let pops = [];
+   let location = [];
    rootRef.on('value',snap=>{    
      snap.forEach(ss =>{
        pops.push({
          key: ss.val().Email,
          value: ss.val().Password
        });
+       location.push(ss.val().Location);
        uniqueIDs.push(ss.key);
      });
      this.setState({data:pops,IDs:uniqueIDs});
+     this.setState({location1:location});
     //  console.log(this.state.IDs);    
    });
 

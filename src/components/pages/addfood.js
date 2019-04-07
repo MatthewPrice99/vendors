@@ -16,13 +16,41 @@ class Addfood extends Component {
       pickupTime:'',
       des:'',
       price:'',
-      Location:''
+      Location:'',
+      pic: null,
+      returnURL:null,
+      displayPic:null
     };
+
+    //Upload handler
+
+    this.fileSelectedHandler = event =>{
+      event.persist();
+      this.setState(()=>({ 
+        pic : event.target.files[0]
+      }),()=>{
+        console.log(this.state.pic)
+      });
+    }
   
     this.writeDB = () =>{
       const vendRef = firebase.database().ref().child('Vendor').child(sessionStorage.getItem("currentVendor"));
+      //Upload picture
+      const uploadTask = firebase.storage().ref(`images/${this.state.pic.name}`).put(this.state.pic);
 
-        
+      uploadTask.on('state_changed',(snapshot)=>{
+        //progress
+
+      },(error)=>{
+        //error
+        console.log(error);
+      },()=>{
+        //complete
+        firebase.storage().ref(`images`).child(this.state.pic.name).getDownloadURL().then(url =>{
+          console.log(url);
+          this.setState({returnURL: url});
+        });
+      });
       //set info based on submit
       this.setState((prevState,props)=>({
         name: this.refs.name.value,
@@ -36,12 +64,12 @@ class Addfood extends Component {
         this.refs.pickupTime.value = '';
         this.refs.des.value = '';
         this.refs.price.value = '';
-       const foodRef = firebase.database().ref().child('Food');
+        const foodRef = firebase.database().ref().child('Food');
 
         foodRef.push({
           Available: "Yes",
           Description: this.state.des,
-          Image: "https://www.lecremedelacrumb.com/wp-content/uploads/2014/05/chicken-pad-thai-6.jpg",
+          Image: this.state.returnURL,
           LatLng: "43.650748,-79.430531",
           Name: this.state.name,
           PickupTime: this.state.PickupTime,
@@ -66,7 +94,8 @@ class Addfood extends Component {
 
    vendRef.on('value',snap=>{    
     this.setState((prevState,props)=>({  
-      location: snap.val().Location
+      location: snap.val().Location,
+      displayPic: snap.val().Image
     }),()=>{
       //do stuff after
     });  
@@ -91,19 +120,35 @@ class Addfood extends Component {
         <input type="text" className="fadeIn1" placeholder="Item Name" name="name" ref="name" />
         </label>
         <label>
-        <input type="text" className="fadeIn1" placeholder="Max Pickup Time" name="pickup" ref="pickupTime" />
+          Max Pickup Time        
+          <select ref="pickupTime" placeholder="Max Pickup Time" className="dropBox"> 
+          <option value="7:00pm">7:00pm</option>
+          <option value="7:30pm">7:30pm</option>
+          <option value="8:00pm">8:00pm</option>
+          <option value="8:30pm">8:30pm</option>
+          <option value="9:00pm">9:00pm</option>
+          <option value="9:30pm">9:30pm</option>
+          <option value="10:00pm">10:00pm</option>
+          <option value="10:30pm">10:30pm</option>
+          <option value="11:00pm">11:00pm</option>
+          <option value="11:30pm">11:30pm</option>
+          <option value="12:00am">12:00am</option>
+          <option value="1:00am">1:00am</option>
+        </select>
         </label>
         <label>
         <input type="text" className="fadeIn1" placeholder="Price" name="price" ref="price" />
         </label>
         <label>
-        <input type="text" className="fadeIn1" placeholder="Description" name="des" ref="des"/>
+        <div className="form-group">
+          <textarea className="form-control" id="exampleFormControlTextarea3" placeholder ="Describe the food item here..." rows="7" ref="des"></textarea>
+        </div>
         </label>
         <label>
-        <input type="file" className="fadeIn3" placeholder="Address" name="pic" ref="pic" accept="image/*"/>
+        <input type="file" className="fadeIn3" placeholder="Address" name="pic" ref="pic" accept="image/*" onChange={this.fileSelectedHandler}/>
         </label>
         <input type="button" className="fadeIn4" value="Add Item"onClick={this.writeDB.bind(this)}/>
-        </form> 
+        </form>
      </div>
     );
   }
