@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
-import { BrowserRouter, Redirect } from 'react-router-dom';
 
 
 console.log('update page');

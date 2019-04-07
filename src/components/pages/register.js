@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
-// import { BrowserRouter } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 
 class Register extends Component {
@@ -18,7 +18,8 @@ class Register extends Component {
       cat:'',
       pic:null,
       dbCount:0,
-      PickupMax: null
+      PickupMax: null,
+      redirect:null
     };
 
     this.fileSelectedHandler = event =>{
@@ -41,11 +42,16 @@ class Register extends Component {
       });
   
       this.writeDB = () =>{
+      //check if null
+      if(this.state.pic == null){
+        window.alert('Must upload a picture.')
+        return;
+      }
       
       //assign catID
       let catId;
       if((this.state.data.indexOf(this.refs.cat.value)+1)<10){
-        catId = '0'+(this.state.data.indexOf(this.refs.cat.value)+1).toString()
+        catId ='0'+(this.state.data.indexOf(this.refs.cat.value)+1).toString()
       }else{
         catId = (this.state.data.indexOf(this.refs.cat.value)+1).toString()
       }
@@ -95,6 +101,7 @@ class Register extends Component {
               }).then(function(){
                 console.log("data written successfully.");
                 window.alert("You have registered successfully.");
+                               
               }).catch(function(error){
                 console.log("error writing to the database: ",error);
               });
@@ -124,7 +131,7 @@ class Register extends Component {
  }
 
   render() {
-    return (
+    return (    
      <div className='container-fluid'>       
         <form className='poop'>
         <h1 className="title">Register</h1>

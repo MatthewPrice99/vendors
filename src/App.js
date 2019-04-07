@@ -17,6 +17,7 @@ import Database2 from './components/pages/database2';
 
 
 
+
 //includes
 import './Assets/css/default.min.css'
 console.log('sessionstorage:'+sessionStorage.getItem("loggedIn"));
@@ -37,21 +38,7 @@ class App extends Component {
     }else{
       this.setState({navbar:<Header/>});
     }
-    
-
-
-
   }
-
-  // refreshOnce = ()=>{
-  //   window.location.reload();
-
-  //   setTimeout(function(){
-  //     console.log('timeout done');
-
-  //   },40000000);
-  // };
-  
  
   render() {
 
@@ -69,7 +56,7 @@ class App extends Component {
 
               }              
             }
-          }/> 
+          }/>
 
           <Route path ="/register" exact strict render={
             ()=>{

@@ -39,17 +39,14 @@ class Homepage extends Component {
         console.log("on click added: "+sessionStorage.getItem("loggedIn"));
         this.setState({redirect:true});
         window.location.reload();
-        return;
-        
-      }else{
-        console.log("incorrect user/pass");       
-      } 
+        return;   
+      }
       counter = counter+1
-
     };
-   
-    }
+    console.log("incorrect user/pass");
+    window.alert('Account doesnt exist/Incorrect pass');    
   }
+}
   componentDidMount(){
 
    const rootRef = firebase.database().ref().child('Vendor');
