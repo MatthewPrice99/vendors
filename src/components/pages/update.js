@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
+var bcrypt = require('bcryptjs');
 
  
 class Update extends Component {
@@ -208,19 +209,23 @@ class Update extends Component {
   //get new updated data
   let newInfo = prompt("Please enter updated information.", this.state.password);
   //console it to make sure
-  console.log(newInfo);
+
   //update DB
   if(newInfo===null || newInfo ===''){
     window.alert("Enter information. Do not leave field blank.");
     return;
    }
-  vendRef.update({
-    Password: newInfo
+   var salt = bcrypt.genSaltSync(10);
+   var hash = bcrypt.hashSync(newInfo, salt);
+    vendRef.update({
+    Password: hash
   },function(error){
     if(error){
       console.log('failed to update',error);
     }else{
       console.log('database update successful.');
+      sessionStorage.setItem("password",newInfo);
+      window.location.reload();
     }
   });
   };
@@ -243,7 +248,7 @@ class Update extends Component {
           restName: snap.val().Name,
           pickupMax: snap.val().PickupMax,
           rating: snap.val().Rating,
-          password: snap.val().Password
+          password: sessionStorage.getItem("password")
         }),()=>{
           //do stuff after
         });  

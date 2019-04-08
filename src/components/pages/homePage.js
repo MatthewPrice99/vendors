@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import * as firebase from 'firebase';
 import { Redirect } from 'react-router-dom';
 import App from '../../App';
+var bcrypt = require('bcryptjs');
+
+
 
 
 
@@ -27,13 +30,16 @@ class Homepage extends Component {
       IDs: [],
       loaction1: []
     };
+
     
     
+
     this.loginHandle = () => {
       let counter = 0;
       for(var [key,value] of Object.entries(this.state.data)){   
-      if(value['key'] === this.refs.email.value && value['value'] === this.refs.pass.value){
+      if(value['key'] === this.refs.email.value && bcrypt.compareSync(this.refs.pass.value, value['value'])){
         this.setState({loggedIn:true});
+        sessionStorage.setItem("password",this.refs.pass.value);
         sessionStorage.setItem("currentVendor",this.state.IDs[counter]);
         sessionStorage.setItem("currentLocation",this.state.location1[counter]);
         sessionStorage.setItem("loggedIn","true");

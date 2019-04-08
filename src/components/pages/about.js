@@ -18,7 +18,7 @@ class About extends Component {
 
   <div className="w3-row-padding w3-grayscale">
     <div className="w3-col l3 m6 w3-margin-bottom">
-      <img src="http://allthingsd.com/files/2012/01/questionmark.png" alt="Vlad" style={{width:"100%",height:"470px"}}></img>
+      <img src="https://firebasestorage.googleapis.com/v0/b/nitebite-v3.appspot.com/o/images%2F12144878_10153334305237737_7026250362740306234_n.jpg?alt=media&token=690caa00-e4df-4252-87e1-836a4ca70636" alt="Vlad" style={{width:"100%",height:"470px"}}></img>
       <h3>Vlad Puscasu</h3>
       <p className="w3-opacity"style={{color:"darkgrey"}}>Teamlead & Developer</p>
       <p>Vlad worked on the User App back-end/front-end.  Also the Teamlead.</p>

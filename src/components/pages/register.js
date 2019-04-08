@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
 import { Redirect } from 'react-router-dom';
+var bcrypt = require('bcryptjs');
 
 
 class Register extends Component {
@@ -88,13 +89,14 @@ class Register extends Component {
              console.log(url);
             const rootRef = firebase.database().ref().child('Vendor');
             if(this.state.password === this.state.confirmpass){
-              console.log(this.state.returnURL);
+              var salt = bcrypt.genSaltSync(10);
+              var hash = bcrypt.hashSync(this.state.password, salt);
               rootRef.push({
                 CategoryId: this.state.cat,
                 Email: this.state.email,
                 Location: this.state.address,
                 Name: this.state.restname,
-                Password: this.state.password,
+                Password: hash,
                 Image: url,
                 PickupMax: this.state.PickupMax,
                 Rating: "3"       
