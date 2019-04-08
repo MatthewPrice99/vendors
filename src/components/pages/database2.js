@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
+import { BrowserRouter, Redirect, Link } from 'react-router-dom';
 
 class Database2 extends Component {
 
@@ -7,7 +8,7 @@ class Database2 extends Component {
     super();
 
     this.state = {
-        tech: 'select',
+        tech: '',
         category: '',
         food: '',
         request: '',
@@ -36,12 +37,19 @@ class Database2 extends Component {
       });
     }
 
+    this.handleChange = (e) => {
+      this.setState({name: this.refs.name.value});
+    }
+
     this.searchDB = () => {
       const jsonObj = document.getElementById('jsonObj');
       const vendRef = firebase.database().ref().child('Vendor');
-      const dbsRef = firebase.database().ref().child(this.state.tech)
-      const dbsRef2 = firebase.database().ref().child(this.state.tech).child('01').child('Name');
-
+      console.log(this.state.tech);
+      if (this.state.tech === '') {
+        window.alert('Please choose a category from the drop down list first.');
+      }
+      else {
+        const dbsRef = firebase.database().ref().child(this.state.tech)
       if(this.refs.name.value){
         let found = '';
         let data = [];
@@ -61,57 +69,52 @@ class Database2 extends Component {
       });
       dbsRef.child(found).on('value',snap=>{
         jsonObj.innerText = JSON.stringify(snap.val(), null, 3);
+        sessionStorage.setItem("path", found);
       });
       
-        
       }else{
         //set jsonObj text all
         dbsRef.on('value',snap=>{
         jsonObj.innerText = JSON.stringify(snap.val(), null, 3);
-
       });
-      
       }
-
-
-     
-
-  
-    
-
+      }
+      // const jsonObj = document.getElementById('jsonObj');
+      // const vendRef = firebase.database().ref().child('Vendor');
       // var keys = 0;
-      // setTimeout(function () {
+      // var found = false;
+      // var searchName = this.state.name;
+      // console.log(searchName);
+      // var newName = '';
       // vendRef.once('value').then(function(vendSnapshot) {
       //   return vendSnapshot.forEach(function(vendSnapshot) {
       //     keys = vendSnapshot.val();
-      //     console.log(keys.Name.toLowerCase());
-      //     if (keys.Name.toLowerCase() === "barque") {
+      //     newName = keys.Name.toLowerCase();
+      //     if (newName === searchName.toLowerCase()){
+      //       console.log('New Match ' + newName.toLowerCase() + ' ' + searchName.toLowerCase());
       //       const nameRef = firebase.database().ref().child('Vendor').child('02');
-      //       nameRef.on('value',snap=>{
+      //       nameRef.on('value', snap => {
       //         jsonObj.innerText = JSON.stringify(snap.val(), null, 3);
-      //       })
+      //       });
+      //       found = true;
       //     }
-      //   })
-      // })
-      // }, 1000);
+      //   });
+      // });
       // dbsRef.on('value', snap=> {
       //   jsonObj.innerText = JSON.stringify(snap.val(), null, 3);
       // })
-    }
-
-    this.editDB = () => {
-
-    }
-
-    this.handleChange = (e) => {
-      this.setState({name: this.refs.name.value});
     }
     
     this.optSel = (e) => {
         this.setState((prevState, props) => ({
             tech: this.refs.dropBox.value
         }), () => {
-            console.log("state of select " + this.state.tech);
+          console.log("state of select " + this.state.tech);
+          const dbsRef = firebase.database().ref().child(this.state.tech);
+          const jsonObj = document.getElementById('jsonObj');
+          dbsRef.on('value', snap => {
+            jsonObj.innerText = JSON.stringify(snap.val(), null, 3);
+          });
         });
     }
   } 
@@ -123,7 +126,7 @@ class Database2 extends Component {
             <hr></hr>
             <form>
                 <select id="choose" ref="dropBox" onChange={this.optSel.bind(this)} value={this.state.tech}>
-                    <option value="Category" ref="opt">Category</option>
+                    <option selected="selected" value="Category" ref="opt">Category</option>
                     <option value="Food" ref="opt">Food</option>
                     <option value="Rating" ref="opt">Rating</option>
                     <option value="Requests" ref="opt">Requests</option>
@@ -132,8 +135,8 @@ class Database2 extends Component {
                 </select>  
                 <input type="text" className="fadeIn1" value={this.state.name} onChange={this.handleChange.bind(this)} placeholder="Search for vendor" ref="name"></input>
                 <input type="button" value="Search" onClick={this.searchDB.bind(this)}/>
-                <input type="button" value="Edit" onClick={this.editDB.bind(this)}/>
-            </form>
+                <Link to="/edit"><button type="button" value="Edit">Edit</button></Link>
+                </form>
             <hr></hr>
             <div id="jsonObj"></div>
         </div>
