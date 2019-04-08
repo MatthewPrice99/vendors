@@ -14,16 +14,9 @@ class Database2 extends Component {
         user: '',
         name: '',
         vendor: '',
-        catArr: [],
-        foodArr: [],
-        ratingArr: [],
-        requestArr: [],
-        userArr: [],
-        vendorArr: [],
         dbCount: 0
     };
 
-    
     this.writeDB = () => {
       var data = [];
       this.setState((prevState, props) => ({
@@ -44,41 +37,76 @@ class Database2 extends Component {
     }
 
     this.searchDB = () => {
-        const jsonObj = document.getElementById('jsonObj');
-        const dbsRef = firebase.database().ref().child(this.state.tech)
-        const dbsRef2 = firebase.database().ref().child(this.state.tech).child('Name');
-        // if (dbsRef.child('Name') === this.state.name) {
-        //     dbsRef = dbsRef.child(this.state.name)
-        // }
-        // switch (this.state.name) {
-        //     case dbsRef2
+      const jsonObj = document.getElementById('jsonObj');
+      const vendRef = firebase.database().ref().child('Vendor');
+      const dbsRef = firebase.database().ref().child(this.state.tech)
+      const dbsRef2 = firebase.database().ref().child(this.state.tech).child('01').child('Name');
 
-        // }
-
+      if(this.refs.name.value){
+        let found = '';
+        let data = [];
+        //search based on input
         dbsRef.on('value',snap=>{
-            const jsonDb2 = JSON.stringify(snap.val(), null, 3);
-            console.log(jsonDb2);
-            jsonObj.innerText = JSON.stringify(snap.val(), null, 3);
-            console.log('Child of child ' + JSON.stringify(snap.val(), null, 3));
-        })
+          snap.forEach(ss =>{
+            data = Object.values(ss.val())
+            data.forEach(x =>{
+              if(this.refs.name.value === x){
+                found = ss.key;
+              } 
+            });
+          });
+          // dbsRef.child(found).on('value',snap=>{
+          // jsonObj.innerText = JSON.stringify(snap.val(), null, 3);
+          // });
+      });
+      dbsRef.child(found).on('value',snap=>{
+        jsonObj.innerText = JSON.stringify(snap.val(), null, 3);
+      });
+      
+        
+      }else{
+        //set jsonObj text all
+        dbsRef.on('value',snap=>{
+        jsonObj.innerText = JSON.stringify(snap.val(), null, 3);
 
-        dbsRef2.on('value',snap=>{
-            const jsonDb2 = JSON.stringify(snap.val(), null, 3);
-            console.log(jsonDb2);
-        })
+      });
+      
+      }
+
+
+     
+
+  
+    
+
+      // var keys = 0;
+      // setTimeout(function () {
+      // vendRef.once('value').then(function(vendSnapshot) {
+      //   return vendSnapshot.forEach(function(vendSnapshot) {
+      //     keys = vendSnapshot.val();
+      //     console.log(keys.Name.toLowerCase());
+      //     if (keys.Name.toLowerCase() === "barque") {
+      //       const nameRef = firebase.database().ref().child('Vendor').child('02');
+      //       nameRef.on('value',snap=>{
+      //         jsonObj.innerText = JSON.stringify(snap.val(), null, 3);
+      //       })
+      //     }
+      //   })
+      // })
+      // }, 1000);
+      // dbsRef.on('value', snap=> {
+      //   jsonObj.innerText = JSON.stringify(snap.val(), null, 3);
+      // })
     }
 
     this.editDB = () => {
-        const jsonObj = document.getElementById('jsonObj');
-        const dbsRef = firebase.database().ref().child(this.state.tech)
 
     }
 
-    this.deleteDB = () => {
-        
-
+    this.handleChange = (e) => {
+      this.setState({name: this.refs.name.value});
     }
-
+    
     this.optSel = (e) => {
         this.setState((prevState, props) => ({
             tech: this.refs.dropBox.value
@@ -86,14 +114,6 @@ class Database2 extends Component {
             console.log("state of select " + this.state.tech);
         });
     }
-
-        // this.optSel = (e) => {
-        //     this.setState((prevState, props) => ({
-        //         tech: e.target.value
-        //     }), () => {
-        //         console.log("state of select" + this.state.tech)
-        //     })
-        // }   
   } 
 
   render() {
@@ -110,11 +130,9 @@ class Database2 extends Component {
                     <option value="User" ref="opt">User</option>
                     <option value="Vendor" ref="opt">Vendor</option>
                 </select>  
-                <input type="text" className="fadeIn1" placeholder="Search" name="name" ref="name"></input>
+                <input type="text" className="fadeIn1" value={this.state.name} onChange={this.handleChange.bind(this)} placeholder="Search for vendor" ref="name"></input>
                 <input type="button" value="Search" onClick={this.searchDB.bind(this)}/>
-                <input type="button" value="Add" onClick={this.writeDB.bind(this)}/>
                 <input type="button" value="Edit" onClick={this.editDB.bind(this)}/>
-                <input type="button" value="Delete" onClick={this.deleteDB.bind(this)}/>
             </form>
             <hr></hr>
             <div id="jsonObj"></div>
