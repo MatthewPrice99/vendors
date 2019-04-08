@@ -1,13 +1,7 @@
 import React, { Component } from 'react';
 import * as firebase from 'firebase';
 
-
-console.log('update page');
-console.log("session storage holds: "+sessionStorage.getItem("loggedIn"))
-
-
-
-   
+ 
 class Update extends Component {
   constructor(){
     super();

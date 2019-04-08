@@ -1,6 +1,21 @@
 @import "_config.scss";
 
 body{
+    
+    .w3-container{
+        padding-top: 3%;
+
+       
+        
+    }
+
+    .w3-col{
+        display: inline-block;
+        padding-right: 3%;
+        width: 25%;
+        padding-top: 1%;
+    }
+
     .form-group{
         width: 235px;
     }

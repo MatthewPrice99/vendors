@@ -117,6 +117,13 @@ class Database2 extends Component {
           });
         });
     }
+
+    this.editDB = (e) => {
+      if (this.state.tech !== 'Vendor') {
+        window.alert('Please search for a vendor to edit');
+        e.preventDefault();
+      }
+    }
   } 
 
   render() {
@@ -126,7 +133,7 @@ class Database2 extends Component {
             <hr></hr>
             <form>
                 <select id="choose" ref="dropBox" onChange={this.optSel.bind(this)} value={this.state.tech}>
-                    <option selected="selected" value="Category" ref="opt">Category</option>
+                    <option defaultValue="Category" value="Category" ref="opt">Category</option>
                     <option value="Food" ref="opt">Food</option>
                     <option value="Rating" ref="opt">Rating</option>
                     <option value="Requests" ref="opt">Requests</option>
@@ -135,7 +142,7 @@ class Database2 extends Component {
                 </select>  
                 <input type="text" className="fadeIn1" value={this.state.name} onChange={this.handleChange.bind(this)} placeholder="Search for vendor" ref="name"></input>
                 <input type="button" value="Search" onClick={this.searchDB.bind(this)}/>
-                <Link to="/edit"><button type="button" value="Edit">Edit</button></Link>
+                <Link to="/edit"><button type="button" value="Edit" onClick={this.editDB.bind(this)}>Edit</button></Link>
                 </form>
             <hr></hr>
             <div id="jsonObj"></div>

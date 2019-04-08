@@ -14,6 +14,8 @@ import Admin from './components/pages/admin';
 import Addfood from './components/pages/addfood';
 import Database2 from './components/pages/database2';
 import Edit from './components/pages/edit';
+import Error from './components/pages/error';
+
 
 
 
@@ -126,6 +128,7 @@ class App extends Component {
                 return <Redirect to='/' />
               }
            }/> 
+           
 
           <Footer />
         </div>
