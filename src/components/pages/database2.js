@@ -51,7 +51,7 @@ class Database2 extends Component {
       else {
         const dbsRef = firebase.database().ref().child(this.state.tech)
       if(this.refs.name.value){
-        let found = '';
+        let found = 'a';
         let data = [];
         //search based on input
         dbsRef.on('value',snap=>{

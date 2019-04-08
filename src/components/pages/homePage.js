@@ -27,7 +27,8 @@ class Homepage extends Component {
       IDs: [],
       loaction1: []
     };
-
+    
+    
     this.loginHandle = () => {
       let counter = 0;
       for(var [key,value] of Object.entries(this.state.data)){   
