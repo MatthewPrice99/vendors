@@ -8,13 +8,6 @@ var bcrypt = require('bcryptjs');
 
 
 
-console.log(sessionStorage.getItem("loggedIn"));
-let message;
-if(sessionStorage.getItem("loggedIn")!==true){
-  console.log(sessionStorage.getItem("loggedIn"))
-  message = "Please Enter Correct User/Password"
-}
-
 class Homepage extends Component {
 
   constructor(){
@@ -31,8 +24,6 @@ class Homepage extends Component {
       loaction1: []
     };
 
-    
-    
 
     this.loginHandle = () => {
       let counter = 0;

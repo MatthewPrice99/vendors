@@ -249,7 +249,7 @@ class Edit extends Component {
           image: snap.val().Image,
           location: snap.val().Location,
           restName: snap.val().Name,
-          pickupMax: snap.val().PickupMax,
+          pickupMax: snap.val().PickUpMax,
           rating: snap.val().Rating,
           password: snap.val().Password
         }),()=>{

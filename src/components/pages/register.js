@@ -98,7 +98,7 @@ class Register extends Component {
                 Name: this.state.restname,
                 Password: hash,
                 Image: url,
-                PickupMax: this.state.PickupMax,
+                PickUpMax: this.state.PickupMax,
                 Rating: "3"       
               }).then(function(){
                 console.log("data written successfully.");
