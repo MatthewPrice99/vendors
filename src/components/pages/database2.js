@@ -50,7 +50,7 @@ class Database2 extends Component {
           snap.forEach(ss =>{
             data = Object.values(ss.val())
             data.forEach(x =>{
-              if(this.refs.name.value === x){
+              if(this.refs.name.value.toLowerCase() === x.toLowerCase()){
                 found = ss.key;
               } 
             });
