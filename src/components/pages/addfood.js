@@ -34,17 +34,18 @@ class Addfood extends Component {
       //set info based on submit
       this.setState((prevState,props)=>({
         name: this.refs.name.value,
-        PickupTime: this.refs.pickupTime.value,
+        pickupTime: this.refs.pickupTime.value,
         des: this.refs.des.value,
         price: this.refs.price.value
         
       }),()=>{
-        //reset fields
-        this.refs.name.value = '';
-        this.refs.pickupTime.value = '';
-        this.refs.des.value = '';
-        this.refs.price.value = '';
+       
         const foodRef = firebase.database().ref().child('Food');
+
+        if(this.state.pic === null){
+          window.alert("Dont forget the photo.");
+          return;
+        }
 
         //Upload picture
         const uploadTask = firebase.storage().ref(`images/${this.state.pic.name}`).put(this.state.pic);
@@ -55,23 +56,35 @@ class Addfood extends Component {
           console.log(error);
         },()=>{
           //complete
-          firebase.storage().ref(`images`).child(this.state.pic.name).getDownloadURL().then(url =>{
-            console.log(url);
+        
+            
+            if(this.state.des === ''|| this.state.name === ''|| this.state.pickupTime.value === ''|| this.state.price === ''){
+              window.alert("Please fill out all fields with correct information.")
+              return;
+            }
+            firebase.storage().ref(`images`).child(this.state.pic.name).getDownloadURL().then(url =>{
+
             foodRef.push({
               Available: "Yes",
               Description: this.state.des,
               Image: url,
               LatLng: "43.650748,-79.430531",
               Name: this.state.name,
-              PickupTime: this.state.PickupTime,
+              PickupTime: this.state.pickupTime,
               PrepareDate: new Date().toDateString(),
               Price: this.state.price,
               VendorAdress: this.state.location,
               VendorId: sessionStorage.getItem("currentVendor")
 
             }).then(function(){
-              console.log("data written successfully.");
+              console.log("data written successfully.");    
+              // reset fields
+              // this.refs.name.value = '';
+              // this.refs.pickupTime.value = '';
+              // this.refs.des.value = '';
+              // this.refs.price.value = '';
               window.alert("You have added a food item successfully.");
+           
             }).catch(function(error){
               console.log("error writing to the database: ",error);
             });  

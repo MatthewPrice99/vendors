@@ -88,7 +88,7 @@ class Register extends Component {
            firebase.storage().ref(`images`).child(this.state.pic.name).getDownloadURL().then(url =>{
              console.log(url);
             const rootRef = firebase.database().ref().child('Vendor');
-            if(this.state.password === this.state.confirmpass){
+            if(this.state.password === this.state.confirmpass && this.state.email !== ''&& this.state.restname !== ''&& this.state.address !== ''){
               var salt = bcrypt.genSaltSync(10);
               var hash = bcrypt.hashSync(this.state.password, salt);
               rootRef.push({
@@ -109,7 +109,7 @@ class Register extends Component {
               });
             }
             else{
-              window.alert("Please make sure both passwords are the same.");
+              window.alert("Please make sure both passwords are the same and all information is filled out correctly.");
               console.log("Passwords dont match.");
             }
             });
@@ -133,7 +133,9 @@ class Register extends Component {
  }
 
   render() {
-    return (    
+    return ( 
+      
+      
      <div className='container-fluid'>       
         <form className='poop'>
         <h1 className="title">Register</h1>

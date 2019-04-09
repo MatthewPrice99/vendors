@@ -25,7 +25,7 @@ class Header extends Component {
                  <li>
                     <NavLink to='/admin' exact activeStyle={
                         {color : 'red'}
-                    }>Admin</NavLink>
+                    }>Admin Console</NavLink>
                  </li>
                  <li>
                     <NavLink to='/about' exact activeStyle={
