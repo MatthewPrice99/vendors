@@ -187,11 +187,12 @@ class Edit extends Component {
     let newInfo = prompt("Please enter updated information.", this.state.pickupMax);
     //console it to make sure
     console.log(newInfo);
-    //update DB
+   //check if empty or null
     if(newInfo===null || newInfo ===''){
       window.alert("Enter information. Do not leave field blank.");
       return;
-     }
+     } 
+     //update DB
     vendRef.update({
       PickupMax: newInfo
     },function(error){

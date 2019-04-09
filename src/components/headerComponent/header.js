@@ -23,6 +23,11 @@ class Header extends Component {
                     }>Register</NavLink>
                  </li>
                  <li>
+                    <NavLink to='/admin' exact activeStyle={
+                        {color : 'red'}
+                    }>Admin</NavLink>
+                 </li>
+                 <li>
                     <NavLink to='/about' exact activeStyle={
                         {color : 'red'}
                     }>About</NavLink>

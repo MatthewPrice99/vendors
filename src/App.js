@@ -87,7 +87,11 @@ class App extends Component {
           }/> 
           <Route path ="/admin" exact strict render={
             ()=>{
-              return <Admin/>
+              if(sessionStorage.getItem("admin")){
+                return <Database2/>
+              }else{
+                return <Admin/>
+              }  
             }
           }/> 
           <Route path ="/update" exact strict render={
@@ -128,7 +132,7 @@ class App extends Component {
                 return <Redirect to='/' />
               }
            }/> 
-           
+
 
           <Footer />
         </div>
